@@ -12,17 +12,23 @@ $(document).ready(function(){
 
 function postPeople(event){
   event.preventDefault();
+  console.log('made it into postPeople function');
+
   var formData = {};
-  var formArray = $('form').serializeArray();
+  console.log('form data', formData);
+
+  var formArray = $('#people-form').serializeArray();
   $.each(formArray, function(index, element){
-  formData[element.name] = element.value;
+    formData[element.name] = element.value;
+  });
+  
+  console.log('form data', formData);
 
   $.ajax({
     type:'POST',
     url: '/people',
     data: formData,
     success: appendDom
-    });
   });
 }
 
