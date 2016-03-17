@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var patronus = express.Router();
 var pg = require('pg');
 var app = express();
 
@@ -15,10 +16,9 @@ if (process.env.DATABASE_URL) {
 }
 
 
-person.post('/', function(req, res) {
+patronus.post('/', function(req, res) {
   console.log('body: ', req.body);
-  var first_name = req.body.first_name;
-  var last_name = req.body.last_name;
+  var patronus_name = req.body.patronus_name;
 
   // connect to DB
   pg.connect(connectionString, function(err, client, done){
@@ -30,8 +30,8 @@ person.post('/', function(req, res) {
       var result = [];
 
 
-      var query = client.query('INSERT INTO patronus (first_name, last_name) VALUES ($1, $2) ' +
-                                'RETURNING id, first_name, last_name', [first_name, last_name]);
+      var query = client.query('INSERT INTO patronus (patronus_name) VALUES ($1) ' +
+                                'RETURNING id, patronus_name', [patronus_name]);
 
       query.on('row', function(row){
         result.push(row);
@@ -52,7 +52,7 @@ person.post('/', function(req, res) {
 });
 
 
-person.get('/', function(req, res) {
+patronus.get('/', function(req, res) {
   console.log('body: ', req.body);
   var first_name = req.body.first_name;
   var last_name = req.body.last_name;

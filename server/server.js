@@ -3,6 +3,8 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require('pg');
 var person = require('./routes/person');
+var patronus = require('./routes/patronus');
+
 var app = express();
 
 var port = process.env.PORT || 3000;
@@ -11,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/people', person);
-
+app.use('/patronus', patronus);
 
 //OUR GET/POST/PUT CALLS HERE<>
 //----------------------

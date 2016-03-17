@@ -1,12 +1,11 @@
 
 $(document).ready(function(){
   console.log('This works, quack!');
-  $('#people-form').on('submit', postPeople);
+  // $('#people-form').on('submit', postPeople);
 
   $('#patronus-form').on('submit', postPatronus);
 
 });
-
 //PEOPLE FUNCTIONS AND CALLS
 function postPeople(event){
   event.preventDefault();
@@ -86,7 +85,9 @@ function appendDom(patronusArray){
   for(var i = 0; i < patronusArray.length; i++){
   $('.unassigned-patronus').append('<li>'+patronusArray[i].first_name +' '+patronusArray[i].last_name+'</li>')
   }
+  console.log('patronusArray ', patronusArray);
   appendSelectPatronus(patronusArray);
+
 }
 
 function getPatronus() {
@@ -95,4 +96,11 @@ function getPatronus() {
     url: '/patronus',
     success: appendDom
   });
+}
+
+
+function appendSelectPatronus(patronusArray){
+  for(var i = 0; i < patronusArray.length; i++){
+  $('.select-patronus').append('<option>'+patronusArray[i].patronus_name +'</option>');
+}
 }
