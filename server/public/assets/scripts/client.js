@@ -21,7 +21,7 @@ function postPeople(event){
   $.each(formArray, function(index, element){
     formData[element.name] = element.value;
   });
-  
+
   console.log('form data', formData);
 
   $.ajax({
@@ -33,5 +33,12 @@ function postPeople(event){
 }
 
 function appendDom(person){
-  console.log('Submit works!');
+
+function handleServerResponse(response) {
+  $.ajax({
+    type: 'GET',
+    url: '/people',
+    success: appendDom
+  });
+  console.log('Server says: ', response);
 }
