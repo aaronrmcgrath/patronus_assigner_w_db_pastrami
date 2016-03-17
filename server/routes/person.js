@@ -66,7 +66,7 @@ person.get('/', function(req, res) {
       var result = [];
 
 
-      var query = client.query('SELECT * FROM people;');
+      var query = client.query('SELECT * FROM people ORDER BY id DESC;');
 
       query.on('row', function(row){
         result.push(row);
@@ -74,7 +74,7 @@ person.get('/', function(req, res) {
 
       query.on('end', function() {
         done();
-        res.send(result);
+        return res.json(result);
       });
 
       query.on('error', function(error) {

@@ -12,6 +12,7 @@ $(document).ready(function(){
 
 function postPeople(event){
   event.preventDefault();
+
   console.log('made it into postPeople function');
 
   var formData = {};
@@ -21,24 +22,35 @@ function postPeople(event){
   $.each(formArray, function(index, element){
     formData[element.name] = element.value;
   });
-
   console.log('form data', formData);
 
   $.ajax({
     type:'POST',
     url: '/people',
     data: formData,
-    success: appendDom
+    success: getPeople
   });
+  $('#people-form').trigger('reset');
+
 }
 
-function appendDom(person){
+function appendDom(peopleArray){
+  console.log('inside appendDom after GET call', peopleArray);
+  for(var i = 0; i < peopleArray.length; i++){
+  $('.unassigned-people').append('<li>'+peopleArray[i].first_name +' '+peopleArray[i].last_name+'</li>')
+  }
+  appendSelectPeople();
+}
 
-function handleServerResponse(response) {
+function getPeople() {
   $.ajax({
     type: 'GET',
     url: '/people',
     success: appendDom
   });
-  console.log('Server says: ', response);
+}
+
+
+function appendSelectPeople (){
+  
 }
