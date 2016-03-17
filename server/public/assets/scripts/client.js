@@ -1,11 +1,15 @@
 
 $(document).ready(function(){
   console.log('This works, quack!');
-  // $('#people-form').on('submit', postPeople);
-
+  $('#people-form').on('submit', postPeople);
   $('#patronus-form').on('submit', postPatronus);
+  $('.make-match').on('click', makeMatch);
+  getPatronus();
+  getPeople();
+
 
 });
+
 //PEOPLE FUNCTIONS AND CALLS
 function postPeople(event){
   event.preventDefault();
@@ -30,8 +34,14 @@ function postPeople(event){
   $('#people-form').trigger('reset');
 
 }
-
-function appendDom(peopleArray){
+function getPeople() {
+  $.ajax({
+    type: 'GET',
+    url: '/people',
+    success: peopleAppendDom
+  });
+}
+function peopleAppendDom(peopleArray){
   console.log('inside appendDom after GET call', peopleArray);
   for(var i = 0; i < peopleArray.length; i++){
   $('.unassigned-people').append('<li>'+peopleArray[i].first_name +' '+peopleArray[i].last_name+'</li>')
@@ -39,13 +49,7 @@ function appendDom(peopleArray){
   appendSelectPeople(peopleArray);
 }
 
-function getPeople() {
-  $.ajax({
-    type: 'GET',
-    url: '/people',
-    success: appendDom
-  });
-}
+
 
 
 function appendSelectPeople(peopleArray){
@@ -80,7 +84,7 @@ function postPatronus(event){
 
 }
 
-function appendDom(patronusArray){
+function patronuAppendDom(patronusArray){
   console.log('inside appendDom after GET call', patronusArray);
   for(var i = 0; i < patronusArray.length; i++){
   $('.unassigned-patronus').append('<li>'+patronusArray[i].first_name +' '+patronusArray[i].last_name+'</li>')
@@ -94,13 +98,22 @@ function getPatronus() {
   $.ajax({
     type: 'GET',
     url: '/patronus',
-    success: appendDom
+    success: patronuAppendDom
   });
 }
 
 
 function appendSelectPatronus(patronusArray){
   for(var i = 0; i < patronusArray.length; i++){
-  $('.select-patronus').append('<option>'+patronusArray[i].patronus_name +'</option>');
+  $('.select-patronus').append('<option value="'+patronusArray[i].id+'">'+patronusArray[i].patronus_name +'</option>');
 }
+}
+
+function makeMatch(){
+
+  console.log($('.select-patronus').val());
+  var patronus = $('.select-patronus').val();
+
+
+
 }

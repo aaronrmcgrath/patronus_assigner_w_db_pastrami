@@ -53,7 +53,7 @@ patronus.post('/', function(req, res) {
 
 
 patronus.get('/', function(req, res) {
-  console.log('body: ', req.body);
+  //console.log('body: ', req.body);
   var first_name = req.body.first_name;
   var last_name = req.body.last_name;
 
